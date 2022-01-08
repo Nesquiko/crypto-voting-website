@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { DAppProvider, ChainId } from "@usedapp/core";
+import { Container } from "@material-ui/core";
+import { Header } from "./components/Header";
+import { CreateVotingSession } from "./components/CreateVotingSession";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    return (
+        <DAppProvider
+            config={{
+                supportedChains: [ChainId.Rinkeby],
+                notifications: {
+                    expirationPeriod: 1000,
+                    checkInterval: 1000,
+                },
+            }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            <Header />
+            <Container maxWidth="lg">
+                <CreateVotingSession />
+            </Container>
+        </DAppProvider>
+    );
 }
 
 export default App;
