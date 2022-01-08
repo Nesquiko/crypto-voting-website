@@ -18,13 +18,6 @@ export const CreateVotingSessionForm = () => {
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
-                <h3>Numberof votes per user</h3>
-                <Input />
-            </div>
-
-            <div
-                style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
-            >
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DateTimePicker
                         label="Start"
@@ -34,6 +27,7 @@ export const CreateVotingSessionForm = () => {
                     />
                 </MuiPickersUtilsProvider>
             </div>
+
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
@@ -45,6 +39,13 @@ export const CreateVotingSessionForm = () => {
                         onChange={handleDateChange}
                     />
                 </MuiPickersUtilsProvider>
+            </div>
+
+            <div
+                style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
+            >
+                <h3>Numberof votes per user</h3>
+                <Input />
             </div>
 
             <div
