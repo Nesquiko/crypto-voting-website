@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { CreateVotingSessionForm } from "./CreateVotingSessionForm";
 import { VoteForm } from "./VoteForm";
 
 const useStyles = makeStyles((theme) => ({

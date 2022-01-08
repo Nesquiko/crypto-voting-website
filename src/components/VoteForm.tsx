@@ -1,7 +1,5 @@
 import { Button, Input } from "@material-ui/core";
-import React, { Fragment, useState } from "react";
-import DateFnsUtils from "@date-io/date-fns";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { useState } from "react";
 
 export const VoteForm = () => {
     const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
