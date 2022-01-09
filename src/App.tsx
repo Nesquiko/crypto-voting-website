@@ -10,7 +10,7 @@ function App() {
     return (
         <DAppProvider
             config={{
-                supportedChains: [ChainId.Rinkeby],
+                readOnlyChainId: ChainId.Rinkeby,
                 notifications: {
                     expirationPeriod: 1000,
                     checkInterval: 1000,
