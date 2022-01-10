@@ -2,9 +2,11 @@ import { Button, CircularProgress, Input, Snackbar } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import DateFnsUtils from "@date-io/date-fns";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { useCreateVotingSession } from "./useCreateVotingSession";
+import { useCreateVotingSession } from "./hooks/useCreateVotingSession";
 import { useNotifications } from "@usedapp/core";
 import { Alert } from "@material-ui/lab";
+import { useGetAllSymbols } from "./hooks/useGetAllSymbols";
+import ReactDOM from "react-dom";
 
 function makeid(length: number) {
     var result = "";
@@ -112,15 +114,37 @@ export const CreateVotingSessionForm = () => {
         setShowError(false);
     };
 
+    const symbols = useGetAllSymbols();
+    const getAllVotingSessionSymbols = () => {
+        var formattedSyms: string = "";
+        for (var sym in symbols![0]) {
+            formattedSyms += symbols![0][sym] + " | ";
+        }
+        const paragraph = <p>{formattedSyms}</p>;
+        ReactDOM.render(paragraph, document.getElementById("symbols"));
+    };
+
     return (
         <>
+            <Button
+                color="secondary"
+                variant="contained"
+                style={{
+                    float: "left",
+                    marginLeft: "-200px",
+                    marginTop: "50px",
+                }}
+                onClick={getAllVotingSessionSymbols}
+            >
+                Get All Symbols.
+            </Button>
+            <div id="symbols"></div>
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
                 <h3>Symbol</h3>
                 <Input onChange={handleSymbolChange} />
             </div>
-
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
@@ -133,7 +157,6 @@ export const CreateVotingSessionForm = () => {
                     />
                 </MuiPickersUtilsProvider>
             </div>
-
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
@@ -146,14 +169,12 @@ export const CreateVotingSessionForm = () => {
                     />
                 </MuiPickersUtilsProvider>
             </div>
-
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
                 <h3>Numberof votes per user</h3>
                 <Input onChange={handleNumOfVotesChange} />
             </div>
-
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >

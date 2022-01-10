@@ -1,7 +1,7 @@
 import { useContractFunction, useEthers } from "@usedapp/core";
 import { constants, Contract, utils } from "ethers";
-import VotingHub from "../chain-info/contracts/VotingHub.json";
-import networkMapping from "../chain-info/deployments/map.json";
+import VotingHub from "../../chain-info/contracts/VotingHub.json";
+import networkMapping from "../../chain-info/deployments/map.json";
 
 export const useCreateVotingSession = () => {
     const { chainId } = useEthers();
