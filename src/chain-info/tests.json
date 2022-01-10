@@ -1,0 +1,8 @@
+{
+  "contracts": {
+    "VotingHub": "e393cbefea61f8f8db80024211c21787c45df803",
+    "VotingSession": "a6eaedc56c8ef2bc5a230c2e614b1634f43122bd"
+  },
+  "tests": {},
+  "tx": {}
+}
