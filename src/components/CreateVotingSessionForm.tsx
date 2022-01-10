@@ -29,7 +29,7 @@ export const CreateVotingSessionForm = () => {
         new Date()
     );
 
-    const [numOfVotes, setNumOfVotes] = useState<number>(0);
+    const [numOfVotes, setNumOfVotes] = useState<number>(1);
     const { notifications } = useNotifications();
 
     const handleSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +84,7 @@ export const CreateVotingSessionForm = () => {
     const isProcessing = createVotingSessionState.status === "Mining";
     const [showCreateVotingSesionSuccess, setShowCSuccessreateVotingSesion] =
         useState(false);
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         if (
@@ -94,11 +95,21 @@ export const CreateVotingSessionForm = () => {
             ).length > 0
         ) {
             setShowCSuccessreateVotingSesion(true);
+            setShowError(false);
         }
-    }, [notifications, showCreateVotingSesionSuccess]);
+        if (createVotingSessionState.errorMessage) {
+            setShowCSuccessreateVotingSesion(false);
+            setShowError(true);
+        }
+    }, [
+        notifications,
+        showCreateVotingSesionSuccess,
+        createVotingSessionState,
+    ]);
 
     const handleCloseSnack = () => {
         setShowCSuccessreateVotingSesion(false);
+        setShowError(false);
     };
 
     return (
@@ -165,6 +176,15 @@ export const CreateVotingSessionForm = () => {
             >
                 <Alert onClose={handleCloseSnack} severity="success">
                     Voting Session created!
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={showError}
+                autoHideDuration={5000}
+                onClose={handleCloseSnack}
+            >
+                <Alert onClose={handleCloseSnack} severity="error">
+                    {"Error: " + createVotingSessionState.errorMessage}
                 </Alert>
             </Snackbar>
         </>
