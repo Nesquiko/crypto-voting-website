@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/crypto-voting-website/static/css/main.073c9b0a.css",
-    "main.js": "/crypto-voting-website/static/js/main.e289e521.js",
+    "main.js": "/crypto-voting-website/static/js/main.bdb679b7.js",
     "static/js/787.08d4cc90.chunk.js": "/crypto-voting-website/static/js/787.08d4cc90.chunk.js",
     "index.html": "/crypto-voting-website/index.html",
     "main.073c9b0a.css.map": "/crypto-voting-website/static/css/main.073c9b0a.css.map",
-    "main.e289e521.js.map": "/crypto-voting-website/static/js/main.e289e521.js.map",
+    "main.bdb679b7.js.map": "/crypto-voting-website/static/js/main.bdb679b7.js.map",
     "787.08d4cc90.chunk.js.map": "/crypto-voting-website/static/js/787.08d4cc90.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.e289e521.js"
+    "static/js/main.bdb679b7.js"
   ]
 }
