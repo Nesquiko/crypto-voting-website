@@ -1,9 +1,6 @@
 import { Button, Input } from "@material-ui/core";
-import { useState } from "react";
 
 export const VoteForm = () => {
-    const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
-
     return (
         <>
             <div
