@@ -1,10 +1,13 @@
-import { Button, Input } from "@material-ui/core";
-import { useState } from "react";
+import { Button, CircularProgress, Input, Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { useNotifications } from "@usedapp/core";
+import { useEffect, useState } from "react";
 import { useAddChoice } from "./hooks/useAddChoice";
 
 export const AddChoiceForm = () => {
     const [symbol, setSymbol] = useState<string>("");
     const [choice, setChoice] = useState<string>("");
+    const { notifications } = useNotifications();
 
     const handleSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSymbol(event.target.value);
@@ -27,6 +30,32 @@ export const AddChoiceForm = () => {
         }
 
         return addChoice();
+    };
+
+    const isProcessing = addChoiceState.status === "Mining";
+    const [showAddChoiceSuccess, setShowAddChoiceSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+
+    useEffect(() => {
+        if (
+            notifications.filter(
+                (notification) =>
+                    notification.type === "transactionSucceed" &&
+                    notification.transactionName === "Add choice."
+            ).length > 0
+        ) {
+            setShowAddChoiceSuccess(true);
+            setShowError(false);
+        }
+        if (addChoiceState.errorMessage) {
+            setShowAddChoiceSuccess(false);
+            setShowError(true);
+        }
+    }, [notifications, showAddChoiceSuccess, addChoiceState]);
+
+    const handleCloseSnack = () => {
+        setShowAddChoiceSuccess(false);
+        setShowError(false);
     };
 
     return (
@@ -53,9 +82,31 @@ export const AddChoiceForm = () => {
                     variant="contained"
                     onClick={handleAddChoice}
                 >
-                    Add
+                    {isProcessing ? (
+                        <CircularProgress color="secondary" size={26} />
+                    ) : (
+                        "Add"
+                    )}
                 </Button>
             </div>
+            <Snackbar
+                open={showAddChoiceSuccess}
+                autoHideDuration={5000}
+                onClose={handleCloseSnack}
+            >
+                <Alert onClose={handleCloseSnack} severity="success">
+                    Choice added.
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={showError}
+                autoHideDuration={5000}
+                onClose={handleCloseSnack}
+            >
+                <Alert onClose={handleCloseSnack} severity="error">
+                    {"Error: " + addChoiceState.errorMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };
