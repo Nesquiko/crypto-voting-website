@@ -2,6 +2,8 @@ import { Button, CircularProgress, Input, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useNotifications } from "@usedapp/core";
 import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import { ChoicesParagraph } from "./ChoicesParagraph";
 import { useAddChoice } from "./hooks/useAddChoice";
 
 export const AddChoiceForm = () => {
@@ -24,9 +26,11 @@ export const AddChoiceForm = () => {
             alert(
                 "Please enter a symbol of voting session when adding a new choice."
             );
+            return;
         }
         if (choice === "") {
             alert("Please enter a new choice.");
+            return;
         }
 
         return addChoice();
@@ -58,8 +62,31 @@ export const AddChoiceForm = () => {
         setShowError(false);
     };
 
+    const getChoicesForSymbol = (symbol: string) => {
+        if (symbol === "") {
+            alert(
+                "Please enter a symbol for which you want to see all choices."
+            );
+            return;
+        }
+
+        const paragraph = <ChoicesParagraph symbol={symbol} />;
+        ReactDOM.render(paragraph, document.getElementById("choices"));
+    };
+
     return (
         <>
+            <div>
+                <Button
+                    variant="outlined"
+                    onClick={() => getChoicesForSymbol(symbol)}
+                >
+                    Get choices
+                </Button>
+            </div>
+            <div id="choices">
+                <p></p>
+            </div>
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
