@@ -3,7 +3,7 @@ import { Alert } from "@material-ui/lab";
 import { useNotifications } from "@usedapp/core";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { ChoicesParagraph } from "./ChoicesParagraph";
+import { getAllChoicesForSymbol } from "./ChoicesParagraph";
 import { useAddChoice } from "./hooks/useAddChoice";
 
 export const AddChoiceForm = () => {
@@ -39,6 +39,8 @@ export const AddChoiceForm = () => {
     const isProcessing = addChoiceState.status === "Mining";
     const [showAddChoiceSuccess, setShowAddChoiceSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [showInvalidSymbol, setShowInvalidSymbol] = useState(false);
+    const [gettingChoices, setGettingChoices] = useState(false);
 
     useEffect(() => {
         if (
@@ -60,6 +62,7 @@ export const AddChoiceForm = () => {
     const handleCloseSnack = () => {
         setShowAddChoiceSuccess(false);
         setShowError(false);
+        setShowInvalidSymbol(false);
     };
 
     const getChoicesForSymbol = (symbol: string) => {
@@ -70,8 +73,20 @@ export const AddChoiceForm = () => {
             return;
         }
 
-        const paragraph = <ChoicesParagraph symbol={symbol} />;
-        ReactDOM.render(paragraph, document.getElementById("choices"));
+        setGettingChoices(true);
+        const choices = getAllChoicesForSymbol(symbol, () => {
+            setShowInvalidSymbol(true);
+        });
+        choices.then((result) => {
+            var formattedChoices: string = "";
+            for (var choice in result) {
+                formattedChoices += result[choice] + " | ";
+            }
+
+            const paragraph = <p>{formattedChoices}</p>;
+            ReactDOM.render(paragraph, document.getElementById("choices"));
+            setGettingChoices(false);
+        });
     };
 
     return (
@@ -81,7 +96,11 @@ export const AddChoiceForm = () => {
                     variant="outlined"
                     onClick={() => getChoicesForSymbol(symbol)}
                 >
-                    Get choices
+                    {gettingChoices ? (
+                        <CircularProgress color="secondary" size={26} />
+                    ) : (
+                        "Get Choices"
+                    )}
                 </Button>
             </div>
             <div id="choices">
@@ -93,14 +112,12 @@ export const AddChoiceForm = () => {
                 <h3>Symbol</h3>
                 <Input onChange={handleSymbolChange} />
             </div>
-
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
                 <h3>Choice</h3>
                 <Input onChange={handleChoiceChange} />
             </div>
-
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
@@ -132,6 +149,15 @@ export const AddChoiceForm = () => {
             >
                 <Alert onClose={handleCloseSnack} severity="error">
                     {"Error: " + addChoiceState.errorMessage}
+                </Alert>
+            </Snackbar>{" "}
+            <Snackbar
+                open={showInvalidSymbol}
+                autoHideDuration={5000}
+                onClose={handleCloseSnack}
+            >
+                <Alert onClose={handleCloseSnack} severity="error">
+                    Voting session with this symbol does not exist.
                 </Alert>
             </Snackbar>
         </>

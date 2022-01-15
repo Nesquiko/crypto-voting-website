@@ -3,9 +3,8 @@ import { constants, utils } from "ethers";
 import VotingSession from "../../chain-info/contracts/VotingSession.json";
 import { useGetAddressOfSymbol } from "./useGetAddressOfSymbol";
 
-export const useGetChoicesForSymbol = (symbol: string) => {
+export const useGetChoicesForSymbol = (symbol: string, address: string) => {
     const { abi } = VotingSession;
-    const address = useGetAddressOfSymbol(symbol);
 
     const votinsSessionInterface = new utils.Interface(abi);
     const votingSessionAddress = address ? address[0] : constants.AddressZero;
@@ -14,7 +13,7 @@ export const useGetChoicesForSymbol = (symbol: string) => {
         abi: votinsSessionInterface,
         address: votingSessionAddress,
         method: "getAllChoices",
-        args: [],
+        args: [symbol],
     } as ContractCall;
 
     const choices = useContractCall(call);
