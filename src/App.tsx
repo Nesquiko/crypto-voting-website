@@ -7,6 +7,8 @@ import { Vote } from "./components/Vote";
 import { AddChoice } from "./components/AddChoice";
 
 function App() {
+    document.title = "Crypto Voting";
+
     return (
         <DAppProvider
             config={{
