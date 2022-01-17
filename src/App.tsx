@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { CreateVotingSession } from "./components/CreateVotingSession";
 import { Vote } from "./components/Vote";
 import { AddChoice } from "./components/AddChoice";
+import { GetResults } from "./components/GetResults";
 
 function App() {
     document.title = "Crypto Voting";
@@ -33,6 +34,11 @@ function App() {
             <div style={{ paddingTop: "200px", paddingBottom: "50px" }}>
                 <Container maxWidth="lg">
                     <Vote />
+                </Container>
+            </div>
+            <div style={{ paddingTop: "200px", paddingBottom: "50px" }}>
+                <Container maxWidth="lg">
+                    <GetResults />
                 </Container>
             </div>
             <div style={{ paddingTop: "200px" }} />
