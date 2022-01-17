@@ -97,7 +97,7 @@ export const VoteForm = () => {
             <div
                 style={{ float: "left", marginLeft: "50px", marginTop: "50px" }}
             >
-                <h3>Numberof votes per user</h3>
+                <h3>Number of votes per user</h3>
                 <Input onChange={handleNumOfVotesChange} />
             </div>
 
